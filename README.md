@@ -58,7 +58,7 @@ Barrierefreie Web-App für das Oberlinhaus-Werkstatt (im Vitus-App-Stil). Alle I
 │   ├── lebenslauf.html       # CV/Dokumente
 │   ├── jobs.html             # Jobbörse
 │   ├── meldungen.html        # News & Ankündigungen
-│   ├── fahrplaene.html       # externe Links (BVG, etc.)
+│   ├── fahrplaene.html       # externe Links (Beispiel)
 │   └── design.html           # ⭐ Design-Referenz-Seite
 ├── /data/                     # JSON-Inhalte
 │   ├── speiseplan.json
@@ -106,11 +106,11 @@ Beispiel `data/speiseplan.json`:
   "woche": [
     {
       "tag": "Montag",
-      "datum": "03.02.2025",
-      "mittag": "Pasta mit Tomatensoße",
-      "beilage": "Salat",
-      "nachtisch": "Joghurt mit Obst",
-      "text_easy": "Nudelgericht mit Salat."
+      "datum": "03.02.2026",
+      "mittag": "Gemüse-Lasagne",
+      "beilage": "Bunter Salat",
+      "nachtisch": "Joghurt",
+      "text_easy": "Nudelauflauf mit Gemüse."
     }
   ]
 }
@@ -351,11 +351,11 @@ A: In [CORPORATE_DESIGN.md](CORPORATE_DESIGN.md) - komplett dokumentiert mit Far
 ## 📞 Support
 
 Für technische Fragen: VSC AI  
-Für Oberlinhaus-spezifisch: Marco Müller (Arbeitsvorbereiter) oder Julia Schmidt (Fahrdienst-Koordination)
+Für Oberlinhaus-spezifisch: Tobias Krüger (Jobcoaching) oder Nora Becker (Fahrdienst)
 
 ---
 
-**Letzte Aktualisierung**: 29.01.2025  
+**Letzte Aktualisierung**: 29.01.2026  
 **Status**: MVP + Corporate Design (Phase 4 fertig)  
 **Git-Commits**: 5  
 **Hosting**: GitHub Pages ready  

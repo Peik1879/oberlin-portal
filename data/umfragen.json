@@ -2,24 +2,35 @@
   "umfragen": [
     {
       "id": 1,
-      "frage": "Wie zufrieden bist du mit dem Essen?",
-      "text_easy": "Schmeckt dir das Essen?",
+      "frage": "Wie zufrieden bist du mit den Öffnungszeiten?",
+      "text_easy": "Sind die Zeiten gut für dich?",
       "optionen": [
         { "text": "Sehr zufrieden", "text_easy": "Sehr gut" },
         { "text": "Zufrieden", "text_easy": "Gut" },
-        { "text": "Neutral", "text_easy": "OK" },
-        { "text": "Weniger zufrieden", "text_easy": "Nicht gut" }
+        { "text": "Geht so", "text_easy": "OK" },
+        { "text": "Nicht zufrieden", "text_easy": "Nicht gut" }
       ]
     },
     {
       "id": 2,
-      "frage": "Welches Angebot interessiert dich am meisten?",
-      "text_easy": "Was magst du gern?",
+      "frage": "Welche Aktivität wünschst du dir?",
+      "text_easy": "Was möchtest du machen?",
       "optionen": [
-        { "text": "Yoga", "text_easy": "Yoga" },
-        { "text": "Kreativwerkstatt", "text_easy": "Basteln" },
-        { "text": "Spaziergang", "text_easy": "Spaziergang" },
-        { "text": "Computertraining", "text_easy": "Computer" }
+        { "text": "Sport & Bewegung", "text_easy": "Bewegung" },
+        { "text": "Kochen", "text_easy": "Kochen" },
+        { "text": "Spaziergänge", "text_easy": "Spaziergang" },
+        { "text": "Malen & Basteln", "text_easy": "Malen" }
+      ]
+    },
+    {
+      "id": 3,
+      "frage": "Wie kommst du zur Werkstatt?",
+      "text_easy": "Wie kommst du her?",
+      "optionen": [
+        { "text": "Fahrdienst", "text_easy": "Fahrdienst" },
+        { "text": "Bus/Bahn", "text_easy": "Bus oder Bahn" },
+        { "text": "Zu Fuß", "text_easy": "Zu Fuß" },
+        { "text": "Mit Begleitung", "text_easy": "Mit Hilfe" }
       ]
     }
   ]

@@ -4,10 +4,14 @@
  * Future: Backend-Anschluss möglich (Supabase, Firebase, etc.)
  */
 const API = {
-  basePath: "./", // wird zur Laufzeit ggf. angepasst (für GitHub Pages)
+  basePath: null, // wird zur Laufzeit gesetzt
 
   loadJSON: async (path) => {
     try {
+      if (!API.basePath) {
+        const inPagesFolder = window.location.pathname.includes("/pages/");
+        API.basePath = inPagesFolder ? "../" : "./";
+      }
       const url = `${API.basePath}data/${path}.json`;
       const response = await fetch(url);
       if (!response.ok) {

@@ -59,20 +59,20 @@ Status: **MVP fertig - Bereit für GitHub Pages**
 | [weiterbildungen.html](pages/weiterbildungen.html) | Kurse | Interesse anmelden → localStorage |
 | [fahrkarten.html](pages/fahrkarten.html) | Datei-Upload | Lokal gespeichert, Größe anzeigen |
 | [lebenslauf.html](pages/lebenslauf.html) | Dokument-Verwaltung | Kategorie (CV/Zeugnis), mehrere Docs |
-| [fahrplaene.html](pages/fahrplaene.html) | Links & Kontakt | BVG-Link, Abholdienst-Button |
-| [jobs.html](pages/jobs.html) | Jobbörse | Stub mit Kontakt-Verweis |
+| [fahrplaene.html](pages/fahrplaene.html) | Links & Kontakt | Beispiel-Link, Abholdienst-Button |
+| [jobs.html](pages/jobs.html) | Jobbörse | Daten aus JSON + Kontakt-Box |
 | [meldungen.html](pages/meldungen.html) | News | Wichtig-Banner oben, aria-live |
 
 ### 4️⃣ JSON-Inhalte (mit `text_easy`)
 
 - `data/speiseplan.json` - 5 Tage
 - `data/zeiten.json` - Wöchentlich + Schließtage
-- `data/ansprechpartner.json` - 3 Kontakte mit Themen
-- `data/angebote.json` - 3 Aktivitäten
-- `data/weiterbildungen.json` - 2 Kurse
-- `data/umfragen.json` - 2 Beispiel-Umfragen
-- `data/meldungen.json` - 2 News (1 wichtig)
-- `data/jobs.json` - 1 Job-Demo
+- `data/ansprechpartner.json` - 4 Kontakte mit Themen
+- `data/angebote.json` - 4 Aktivitäten
+- `data/weiterbildungen.json` - 3 Kurse
+- `data/umfragen.json` - 3 Beispiel-Umfragen
+- `data/meldungen.json` - 3 News (1 wichtig)
+- `data/jobs.json` - 3 Job-Demos
 
 Jede Seite hat `text_easy` für Leichte Sprache Toggle.
 
@@ -171,11 +171,11 @@ https://USERNAME.github.io/oberlin-werkstatt-portal/
   "woche": [
     {
       "tag": "Montag",
-      "datum": "10.02.2025",
-      "mittag": "Fisch",
-      "beilage": "Kartoffeln",
-      "nachtisch": "Pudding",
-      "text_easy": "Fisch mit Kartoffeln."
+      "datum": "10.02.2026",
+      "mittag": "Gemüsepfanne",
+      "beilage": "Reis",
+      "nachtisch": "Obst",
+      "text_easy": "Gemüse mit Reis."
     }
   ]
 }
@@ -189,12 +189,12 @@ https://USERNAME.github.io/oberlin-werkstatt-portal/
   "kontakte": [
     {
       "id": 1,
-      "name": "Julia Schmidt",
+      "name": "Nora Becker",
       "rolle": "Fahrdienst",
       "themen": ["fahrdienst"],
-      "telefon": "030-123456",
+      "telefon": "030-555010",
       "erreichbarkeit": { ... },
-      "text_easy": "Julia für Fahrten."
+      "text_easy": "Nora organisiert Fahrten."
     }
   ]
 }
@@ -209,9 +209,9 @@ https://USERNAME.github.io/oberlin-werkstatt-portal/
       "id": 1,
       "kategorie": "wichtig",
       "titel": "Werkstatt geschlossen",
-      "datum": "29.01.2025",
-      "text": "Betriebsfest",
-      "text_easy": "Zu. Fest."
+      "datum": "29.01.2026",
+      "text": "Wartungsarbeiten",
+      "text_easy": "Zu. Reparatur."
     }
   ]
 }
@@ -288,13 +288,13 @@ async uploadTicket(file) {
 ## 📞 Support
 
 Bei Fragen zur Bedienung:
-- **Fahrdienst**: Julia Schmidt 030-123456 (Mo-Fr 09-17 Uhr)
-- **Arbeit**: Marco Müller 030-654321 (Mo-Fr 08-16 Uhr)
-- **Krankmeldung**: Lisa Wagner Morgens (07-09 Uhr)
+- **Fahrdienst**: Nora Becker 030-555010 (Mo-Fr 09-16:30 Uhr)
+- **Arbeit**: Tobias Krüger 030-555020 (Mo-Fr 08:30-16:00 Uhr)
+- **Krankmeldung**: Miriam Seidel morgens (07-09:30 Uhr)
 
 ---
 
 **Version**: 1.0 MVP  
-**Letztes Update**: 29.01.2025  
+**Letztes Update**: 29.01.2026  
 **Author**: VSC AI  
 **Lizenz**: Intern (Oberlinhaus)

@@ -22,23 +22,54 @@
       // Header
       container.appendChild(renderHeader("Jobbörse", true));
 
-      // Placeholder: Keine Jobs Daten-Datei, daher einfache Demo
-      const jobsDiv = document.createElement("div");
-      jobsDiv.className = "info-box highlight";
-      jobsDiv.innerHTML = `
-        <h3>🔨 Jobbörse</h3>
-        <p>Hier werden bald aktuelle Job-Angebote angezeigt.</p>
-        <p><strong>Für Fragen:</strong> Marco Müller 030-654321 (Mo-Fr 08:00-16:00)</p>
-      `;
+      const data = await API.loadJSON("jobs");
+      const isEasyLang = Storage.get("easyLang", false);
 
-      contentDiv.appendChild(jobsDiv);
+      if (!data || !data.jobs || data.jobs.length === 0) {
+        const emptyDiv = document.createElement("div");
+        emptyDiv.className = "info-box highlight";
+        emptyDiv.innerHTML = `
+          <h3>🔨 Jobbörse</h3>
+          <p>Aktuell sind keine Job-Angebote verfügbar.</p>
+        `;
+        contentDiv.appendChild(emptyDiv);
+      } else {
+        const jobsGrid = document.createElement("div");
+        jobsGrid.className = "grid";
 
-      // Kontakt Info
+        data.jobs.forEach((job) => {
+          const jobCard = document.createElement("article");
+          jobCard.className = "card";
+
+          if (isEasyLang) {
+            jobCard.innerHTML = `
+              <h3>${job.titel}</h3>
+              <p>${job.text_easy}</p>
+              <p><small>${job.ort} · ${job.arbeitszeit}</small></p>
+            `;
+          } else {
+            jobCard.innerHTML = `
+              <h3>${job.titel}</h3>
+              <p><strong>Ort:</strong> ${job.ort}</p>
+              <p><strong>Arbeitszeit:</strong> ${job.arbeitszeit}</p>
+              <p>${job.beschreibung}</p>
+              <p><strong>Anforderungen:</strong> ${job.anforderungen}</p>
+              <p><strong>Ansprechperson:</strong> ${job.ansprechpartner}</p>
+            `;
+          }
+
+          jobsGrid.appendChild(jobCard);
+        });
+
+        contentDiv.appendChild(jobsGrid);
+      }
+
       const contactDiv = document.createElement("div");
       contactDiv.className = "help-box";
       contactDiv.innerHTML = `
         <strong>📞 Jobcoaching:</strong>
-        <p>Marco hilft dir bei der Jobsuche und Bewerbungen.</p>
+        <p>Tobias hilft dir bei der Jobsuche und Bewerbungen.</p>
+        <p><small>Kontakt: 030-555020 (Mo-Fr 08:30-16:00)</small></p>
         <a href="./kontakt.html" class="btn" style="display: inline-block; margin-top: 1rem;">
           Zu den Ansprechpartnern
         </a>

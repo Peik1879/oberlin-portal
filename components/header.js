@@ -4,14 +4,26 @@
  */
 function renderHeader(pageTitle = "Oberlinhaus Werkstatt", showBack = false) {
   const header = document.createElement("header");
-  header.className = "header";
+  header.className = "header header--site";
   header.setAttribute("role", "banner");
 
-  let html = `<h1>${pageTitle}</h1>`;
-
-  if (showBack) {
-    html += '<a href="./" class="btn-home" title="Zur Startseite">Home</a>';
-  }
+  let html = `
+    <div class="brandbar">
+      <div class="brand">
+        <div class="logo-circle" aria-hidden="true">OBERLINHAUS</div>
+        <div class="brand-text">
+          <div class="brand-wordmark">OBERLINHAUS</div>
+          <div class="brand-subtitle">Werkstatt Portal</div>
+        </div>
+      </div>
+      <div class="brand-actions">
+        ${showBack ? '<a href="../index.html" class="btn-home" title="Zur Startseite">Home</a>' : ""}
+      </div>
+    </div>
+    <div class="page-titlebar">
+      <h1>${pageTitle}</h1>
+    </div>
+  `;
 
   header.innerHTML = html;
   return header;

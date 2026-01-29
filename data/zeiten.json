@@ -1,23 +1,23 @@
 {
   "normal": {
-    "montag": "07:00 - 18:00",
-    "dienstag": "07:00 - 18:00",
-    "mittwoch": "07:00 - 18:00",
-    "donnerstag": "07:00 - 18:00",
-    "freitag": "07:00 - 17:00",
+    "montag": "07:00 - 17:00",
+    "dienstag": "07:00 - 17:00",
+    "mittwoch": "07:00 - 17:00",
+    "donnerstag": "07:00 - 17:00",
+    "freitag": "07:00 - 16:00",
     "samstag": "Geschlossen",
     "sonntag": "Geschlossen"
   },
   "schließtage": [
     {
-      "datum": "24.12.2025",
-      "grund": "Weihnachtsferien",
-      "text_easy": "Weihnachten - zu hat"
+      "datum": "01.05.2026",
+      "grund": "Tag der Arbeit",
+      "text_easy": "Feiertag - zu hat"
     },
     {
-      "datum": "31.12.2025",
-      "grund": "Silvester",
-      "text_easy": "Silvester - zu hat"
+      "datum": "24.12.2026",
+      "grund": "Weihnachtsferien",
+      "text_easy": "Weihnachten - zu hat"
     }
   ],
   "notiz": "Mittagessen: 12:00 - 13:00"

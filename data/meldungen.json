@@ -3,18 +3,26 @@
     {
       "id": 1,
       "kategorie": "wichtig",
-      "titel": "Werkstatt Montag geschlossen",
-      "datum": "29.01.2025",
-      "text": "Nächsten Montag (03.02.) ist die Werkstatt wegen Betriebsfeier geschlossen.",
-      "text_easy": "Montag zu. Betriebsfest."
+      "titel": "Werkstatt am Freitag geschlossen",
+      "datum": "29.01.2026",
+      "text": "Am Freitag (30.01.) bleibt die Werkstatt wegen Wartungsarbeiten geschlossen.",
+      "text_easy": "Freitag zu. Reparaturarbeiten."
     },
     {
       "id": 2,
       "kategorie": "info",
-      "titel": "Neue Öffnungszeit Freitag",
-      "datum": "28.01.2025",
-      "text": "Ab Februar endet der Freitag um 14 Uhr statt 17 Uhr.",
-      "text_easy": "Freitag früher zu: 14 Uhr."
+      "titel": "Neuer Kurs startet im März",
+      "datum": "27.01.2026",
+      "text": "Der Kurs \"Grundkurs Computer & Tablet\" startet am 09.03. im EDV-Raum.",
+      "text_easy": "Computer-Kurs startet am 09.03."
+    },
+    {
+      "id": 3,
+      "kategorie": "info",
+      "titel": "Essenswünsche für nächste Woche",
+      "datum": "25.01.2026",
+      "text": "Bitte tragt eure Essenswünsche bis Donnerstag in der Küche ein.",
+      "text_easy": "Bitte Essen-Wünsche bis Donnerstag sagen."
     }
   ]
 }

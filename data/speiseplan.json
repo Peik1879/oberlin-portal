@@ -2,43 +2,43 @@
   "woche": [
     {
       "tag": "Montag",
-      "datum": "03.02.2025",
-      "mittag": "Pasta mit Tomatensoße",
-      "beilage": "Salat",
-      "nachtisch": "Joghurt mit Obst",
-      "text_easy": "Nudelgericht mit Salat."
+      "datum": "02.02.2026",
+      "mittag": "Linseneintopf",
+      "beilage": "Brötchen",
+      "nachtisch": "Apfel",
+      "text_easy": "Linsensuppe mit Brot."
     },
     {
       "tag": "Dienstag",
-      "datum": "04.02.2025",
-      "mittag": "Hähnchenschnitzel",
-      "beilage": "Kartoffeln und Gemüse",
-      "nachtisch": "Pudding",
-      "text_easy": "Hähnchen mit Kartoffeln."
+      "datum": "03.02.2026",
+      "mittag": "Gemüse-Lasagne",
+      "beilage": "Bunter Salat",
+      "nachtisch": "Joghurt",
+      "text_easy": "Nudelauflauf mit Gemüse."
     },
     {
       "tag": "Mittwoch",
-      "datum": "05.02.2025",
-      "mittag": "Fischfilet",
-      "beilage": "Reis und Brokkoli",
-      "nachtisch": "Obstbecher",
-      "text_easy": "Fisch mit Reis und Gemüse."
+      "datum": "04.02.2026",
+      "mittag": "Hähnchen-Geschnetzeltes",
+      "beilage": "Reis und Erbsen",
+      "nachtisch": "Obstsalat",
+      "text_easy": "Hähnchen mit Reis."
     },
     {
       "tag": "Donnerstag",
-      "datum": "06.02.2025",
-      "mittag": "Rinderbraten",
-      "beilage": "Kartoffelpüree und Blaukraut",
-      "nachtisch": "Schokoladenpudding",
-      "text_easy": "Fleischgericht mit Kartoffeln."
+      "datum": "05.02.2026",
+      "mittag": "Kartoffelauflauf",
+      "beilage": "Gedünstetes Gemüse",
+      "nachtisch": "Vanillepudding",
+      "text_easy": "Kartoffeln mit Gemüse."
     },
     {
       "tag": "Freitag",
-      "datum": "07.02.2025",
-      "mittag": "Pizzaschnitte",
-      "beilage": "Gemüsesticks",
-      "nachtisch": "Vanilleeiscreme",
-      "text_easy": "Pizza-Brot mit Gemüse."
+      "datum": "06.02.2026",
+      "mittag": "Fischstäbchen",
+      "beilage": "Kartoffelsalat",
+      "nachtisch": "Eiscreme",
+      "text_easy": "Fisch mit Kartoffeln."
     }
   ]
 }

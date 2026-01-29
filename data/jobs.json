@@ -2,13 +2,33 @@
   "jobs": [
     {
       "id": 1,
-      "titel": "Lagerhelfer (Vollzeit)",
-      "ort": "Berlin-Kreuzberg",
-      "arbeitszeit": "Vollzeit, 40 Std/Woche",
-      "beschreibung": "Unterstützung im Lagerbereich. Einfache Tätigkeiten, nettes Team.",
-      "anforderungen": "Körperliche Belastbarkeit, Zuverlässigkeit",
-      "ansprechpartner": "Marco Müller",
-      "text_easy": "Lagerarbeit in Berlin. Vollzeit. Einfache Aufgaben."
+      "titel": "Verpackungshilfe (Teilzeit)",
+      "ort": "Berlin-Mitte",
+      "arbeitszeit": "Teilzeit, 25 Std/Woche",
+      "beschreibung": "Leichte Verpackungsarbeiten, Sortieren und Etikettieren.",
+      "anforderungen": "Sorgfalt, Teamarbeit",
+      "ansprechpartner": "Tobias Krüger",
+      "text_easy": "Verpacken und Sortieren. Teilzeit."
+    },
+    {
+      "id": 2,
+      "titel": "Küchenhilfe (Vollzeit)",
+      "ort": "Berlin-Pankow",
+      "arbeitszeit": "Vollzeit, 38 Std/Woche",
+      "beschreibung": "Unterstützung in der Küche, Vorbereitung und Reinigung.",
+      "anforderungen": "Zuverlässigkeit, Hygienebewusstsein",
+      "ansprechpartner": "Aylin Kaya",
+      "text_easy": "Hilfe in der Küche. Vollzeit."
+    },
+    {
+      "id": 3,
+      "titel": "Gartenpflege (Minijob)",
+      "ort": "Berlin-Spandau",
+      "arbeitszeit": "Minijob, 8 Std/Woche",
+      "beschreibung": "Pflanzen gießen, Wege fegen, einfache Gartenarbeiten.",
+      "anforderungen": "Freude an Außenarbeit",
+      "ansprechpartner": "Nora Becker",
+      "text_easy": "Gartenarbeit. Wenige Stunden."
     }
   ]
 }

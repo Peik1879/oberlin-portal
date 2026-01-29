@@ -2,30 +2,39 @@
   "angebote": [
     {
       "id": 1,
-      "titel": "Yoga für Anfänger",
-      "ort": "Gymnastikraum",
-      "uhrzeit": "Montag & Mittwoch 10:00 - 11:00",
-      "beschreibung": "Entspanntes Yoga für alle.",
+      "titel": "Bewegung & Musik",
+      "ort": "Mehrzweckraum",
+      "uhrzeit": "Montag 10:30 - 11:30",
+      "beschreibung": "Leichte Bewegung mit Musik und Rhythmus.",
       "zielgruppe": "Alle",
-      "text_easy": "Yoga zum Entspannen. Mo & Mi 10 Uhr."
+      "text_easy": "Bewegen mit Musik. Mo 10:30."
     },
     {
       "id": 2,
-      "titel": "Kreativwerkstatt",
-      "ort": "Atelier",
-      "uhrzeit": "Dienstag 14:00 - 16:00",
-      "beschreibung": "Malen, Basteln, Kreativität ausleben.",
+      "titel": "Kochrunde",
+      "ort": "Lehrküche",
+      "uhrzeit": "Dienstag 13:00 - 15:00",
+      "beschreibung": "Gemeinsam einfache Gerichte kochen.",
       "zielgruppe": "Interessierte",
-      "text_easy": "Malen und Basteln. Di 14 Uhr."
+      "text_easy": "Zusammen kochen. Di 13 Uhr."
     },
     {
       "id": 3,
-      "titel": "Gemeinsamer Spaziergang",
-      "ort": "Park",
-      "uhrzeit": "Donnerstag 15:00",
-      "beschreibung": "Gemütlicher Spaziergang in der Natur.",
+      "titel": "Kreativzeit",
+      "ort": "Atelier",
+      "uhrzeit": "Mittwoch 14:00 - 16:00",
+      "beschreibung": "Malen, Basteln, Collagen gestalten.",
       "zielgruppe": "Alle",
-      "text_easy": "Spaziergang im Park. Do 15 Uhr."
+      "text_easy": "Malen und Basteln. Mi 14 Uhr."
+    },
+    {
+      "id": 4,
+      "titel": "Spaziergang am See",
+      "ort": "Treffpunkt Eingang",
+      "uhrzeit": "Freitag 10:00",
+      "beschreibung": "Ruhiger Spaziergang mit Pausen.",
+      "zielgruppe": "Alle",
+      "text_easy": "Spaziergang mit Pausen. Fr 10 Uhr."
     }
   ]
 }

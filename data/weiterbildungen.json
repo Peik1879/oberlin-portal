@@ -2,21 +2,30 @@
   "kurse": [
     {
       "id": 1,
-      "titel": "Computerkurs für Anfänger",
-      "beschreibung": "Einstieg in E-Mail, Internet, Textverarbeitung.",
-      "start": "10.02.2025",
-      "dauer": "8 Wochen",
+      "titel": "Grundkurs Computer & Tablet",
+      "beschreibung": "Einfacher Einstieg in Internet, E-Mail und Apps.",
+      "start": "09.03.2026",
+      "dauer": "6 Wochen",
       "ort": "EDV-Raum",
-      "text_easy": "Computer lernen. 8 Wochen."
+      "text_easy": "Computer und Tablet lernen. 6 Wochen."
     },
     {
       "id": 2,
-      "titel": "Deutschkurs B1",
-      "beschreibung": "Für Menschen, die Deutsch verbessern möchten.",
-      "start": "17.02.2025",
-      "dauer": "12 Wochen",
-      "ort": "Klassenzimmer 2",
-      "text_easy": "Deutsch verbessern. 12 Wochen."
+      "titel": "Arbeitsalltag & Ordnung",
+      "beschreibung": "Struktur, Pünktlichkeit und sichere Abläufe.",
+      "start": "16.03.2026",
+      "dauer": "4 Wochen",
+      "ort": "Kursraum 1",
+      "text_easy": "Ordnung am Arbeitsplatz. 4 Wochen."
+    },
+    {
+      "id": 3,
+      "titel": "Deutsch A2/B1 Aufbau",
+      "beschreibung": "Wortschatz, Lesen, kurze Gespräche üben.",
+      "start": "23.03.2026",
+      "dauer": "10 Wochen",
+      "ort": "Klassenzimmer 3",
+      "text_easy": "Deutsch üben. 10 Wochen."
     }
   ]
 }
