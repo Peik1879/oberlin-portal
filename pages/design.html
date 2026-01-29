@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Design-Richtlinien - Oberlinhaus Werkstatt</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .color-swatch{
+      display:inline-flex;
+      align-items:center;
+      gap:1rem;
+      margin:1rem 0;
+      padding:1rem;
+      background:var(--gray-light);
+      border-radius:6px;
+    }
+
+    .swatch{
+      width:80px;
+      height:80px;
+      border-radius:6px;
+      border:2px solid var(--border);
+      box-shadow:0 2px 8px rgba(0,0,0,.15);
+    }
+
+    .color-info strong{
+      display:block;
+      color:var(--oberlin-red);
+    }
+
+    .color-info p{
+      margin:0.25rem 0;
+      font-size:0.9rem;
+    }
+
+    .typography-demo{
+      background:var(--gray-light);
+      padding:1.5rem;
+      border-radius:6px;
+      margin:1rem 0;
+      border-left:5px solid var(--oberlin-red);
+    }
+
+    .typography-demo h1, .typography-demo h2, .typography-demo h3{
+      margin:0.5rem 0;
+    }
+
+    .button-demo{
+      display:flex;
+      gap:0.75rem;
+      flex-wrap:wrap;
+      padding:1rem;
+      background:var(--gray-light);
+      border-radius:6px;
+      margin:1rem 0;
+    }
+
+    .grid-demo{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+      gap:1rem;
+      margin:1rem 0;
+    }
+
+    .grid-item{
+      background:var(--bg);
+      border:2px solid var(--oberlin-red);
+      border-radius:6px;
+      padding:1.5rem;
+      position:relative;
+      min-height:100px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+    }
+
+    .grid-item::before{
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      height:5px;
+      width:100%;
+      background:var(--oberlin-gold);
+      border-radius:6px 6px 0 0;
+    }
+  </style>
+</head>
+<body>
+  <main class="container page-content"></main>
+
+  <script src="../components/storage.js"></script>
+  <script src="../components/api.js"></script>
+  <script src="../components/ui.js"></script>
+  <script src="../components/header.js"></script>
+  <script>
+    function initPage() {
+      const container = document.querySelector("main");
+      container.appendChild(renderHeader("Design-Richtlinien", true));
+
+      const contentDiv = document.createElement("section");
+      contentDiv.className = "page-section";
+
+      // Farbwelt
+      contentDiv.innerHTML += `
+        <h2>Farbwelt</h2>
+        <p>Das Oberlinhaus Corporate Design basiert auf einer klaren Farbhierarchie: Rot als Primärfarbe, Gold und Sand als Sekundärfarben.</p>
+      `;
+
+      // Primärfarbe
+      const primaryDiv = document.createElement("div");
+      primaryDiv.className = "color-swatch";
+      primaryDiv.innerHTML = `
+        <div class="swatch" style="background:#b61b3e;"></div>
+        <div class="color-info">
+          <strong>Oberlinhaus-Rot</strong>
+          <p><strong>Hex:</strong> #b61b3e</p>
+          <p><strong>RGB:</strong> 182, 28, 62</p>
+          <p><strong>CMYK:</strong> 30, 100, 70, 0</p>
+          <p style="margin-top:0.5rem; opacity:0.8;">Die Königin: Primärfarbe für Struktur und Bedeutung</p>
+        </div>
+      `;
+      contentDiv.appendChild(primaryDiv);
+
+      // Sekundärfarben
+      const secondaryDiv = document.createElement("div");
+      secondaryDiv.className = "color-swatch";
+      secondaryDiv.innerHTML = `
+        <div class="swatch" style="background:#a98b6c;"></div>
+        <div class="color-info">
+          <strong>Gold</strong>
+          <p><strong>Hex:</strong> #a98b6c</p>
+          <p><strong>RGB:</strong> 169, 139, 109</p>
+          <p style="margin-top:0.5rem; opacity:0.8;">Edle Akzente, hochwertig und seriös</p>
+        </div>
+      `;
+      contentDiv.appendChild(secondaryDiv);
+
+      const sandDiv = document.createElement("div");
+      sandDiv.className = "color-swatch";
+      sandDiv.innerHTML = `
+        <div class="swatch" style="background:#efdec5;"></div>
+        <div class="color-info">
+          <strong>Sand</strong>
+          <p><strong>Hex:</strong> #efdec5</p>
+          <p><strong>RGB:</strong> 239, 222, 197</p>
+          <p style="margin-top:0.5rem; opacity:0.8;">Sanfte Hintergründe, warme Akkumulatoren</p>
+        </div>
+      `;
+      contentDiv.appendChild(sandDiv);
+
+      // Typografie
+      contentDiv.innerHTML += `
+        <h2 style="margin-top:2rem;">Typografie</h2>
+        <p><strong>Hausschrift:</strong> Univers LT (Print) / Arial (Web)</p>
+        <p><strong>Prinzipien:</strong> Linksbündig, keine Kursiven, klar hierarchisiert</p>
+      `;
+
+      const typoDemoDiv = document.createElement("div");
+      typoDemoDiv.className = "typography-demo";
+      typoDemoDiv.innerHTML = `
+        <h1>Überschrift 1 (h1)</h1>
+        <h2>Überschrift 2 (h2)</h2>
+        <h3>Überschrift 3 (h3)</h3>
+        <p>Das ist ein normaler Fließtext mit <strong>Betonung</strong> in Rot. Der Text ist linksbündig und nutzt 1.6 Zeilenabstand.</p>
+      `;
+      contentDiv.appendChild(typoDemoDiv);
+
+      // Buttons
+      contentDiv.innerHTML += `
+        <h2 style="margin-top:2rem;">Buttons & Interaktion</h2>
+        <p>Alle Buttons haben eine Mindestgröße von 44×44px (WCAG Touch-Target), Rot als Primärfarbe und klare Hover-Effekte.</p>
+      `;
+
+      const buttonDemoDiv = document.createElement("div");
+      buttonDemoDiv.className = "button-demo";
+      buttonDemoDiv.innerHTML = `
+        <button class="btn">Primär Button</button>
+        <button class="btn btn-secondary">Sekundär Button</button>
+        <button class="btn btn-small">Klein</button>
+      `;
+      contentDiv.appendChild(buttonDemoDiv);
+
+      // Grid/Kacheln
+      contentDiv.innerHTML += `
+        <h2 style="margin-top:2rem;">Kachel-Design (Cards)</h2>
+        <p>Jede Kachel hat einen 5px Gold-Balken oben – das ist unser Erkennungszeichen.</p>
+      `;
+
+      const gridDemoDiv = document.createElement("div");
+      gridDemoDiv.className = "grid-demo";
+
+      for (let i = 1; i <= 3; i++) {
+        const item = document.createElement("div");
+        item.className = "grid-item";
+        item.innerHTML = `<span>Kachel ${i}</span>`;
+        gridDemoDiv.appendChild(item);
+      }
+
+      contentDiv.appendChild(gridDemoDiv);
+
+      // Markenwerte
+      contentDiv.innerHTML += `
+        <h2 style="margin-top:2rem;">Markenwerte</h2>
+        <div class="info-box">
+          <h3>Wegweisend – Wertschätzend – Wertorientiert</h3>
+          <p>Das Design spiegelt die Philosophie wider: klassisch + modern, professionell + warm, seriös + lebendig.</p>
+        </div>
+      `;
+
+      // Accessibility
+      contentDiv.innerHTML += `
+        <h2 style="margin-top:2rem;">Barrierefreiheit</h2>
+        <ul style="text-align:left;">
+          <li>✅ Alle Buttons: min. 44×44px</li>
+          <li>✅ Farbkontraste: min. 4.5:1 (WCAG AA)</li>
+          <li>✅ Vorlesen: Web Speech API Button</li>
+          <li>✅ Schriftgröße: 100%, 120%, 140%</li>
+          <li>✅ Leichte Sprache: Toggle verfügbar</li>
+          <li>✅ Tastatur-Navigation: Vollständig</li>
+        </ul>
+      `;
+
+      // Info Box
+      contentDiv.appendChild(
+        UI.createHelpBox("Diese Seite ist eine Referenz für das Corporate Design. Alle Elemente folgen den Oberlinhaus-Richtlinien.")
+      );
+
+      container.appendChild(contentDiv);
+      container.appendChild(renderFooter("main.page-content"));
+    }
+
+    document.addEventListener("DOMContentLoaded", initPage);
+  </script>
+</body>
+</html>
