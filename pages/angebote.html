@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Angebote - Oberlinhaus Werkstatt</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <main class="container page-content"></main>
+
+  <script src="../components/storage.js"></script>
+  <script src="../components/api.js"></script>
+  <script src="../components/ui.js"></script>
+  <script src="../components/header.js"></script>
+  <script>
+    async function initPage() {
+      const container = document.querySelector("main");
+      const contentDiv = document.createElement("section");
+      contentDiv.className = "page-section";
+
+      // Header
+      container.appendChild(renderHeader("Angebote", true));
+
+      const isEasyLang = Storage.get("easyLang", false);
+      const data = await API.loadJSON("angebote");
+
+      if (!data) {
+        contentDiv.innerHTML += "<p>Angebote konnte nicht geladen werden.</p>";
+        container.appendChild(contentDiv);
+        container.appendChild(renderFooter());
+        return;
+      }
+
+      // Filter
+      const filterDiv = document.createElement("div");
+      filterDiv.className = "filter-buttons";
+      filterDiv.innerHTML = `
+        <button class="btn btn-filter active" data-filter="">Alle</button>
+        <button class="btn btn-filter" data-filter="heute">Heute</button>
+        <button class="btn btn-filter" data-filter="merken">Meine Favoriten</button>
+      `;
+      contentDiv.appendChild(filterDiv);
+
+      // Angebote Grid
+      const offersDiv = document.createElement("div");
+      offersDiv.className = "offers-grid";
+      offersDiv.id = "offersList";
+
+      const renderOffers = (filter = "") => {
+        offersDiv.innerHTML = "";
+
+        let filtered = data.angebote;
+        if (filter === "merken") {
+          const favorites = Storage.list("favorite_");
+          const favIds = favorites.map((f) => f.value.offerId);
+          filtered = filtered.filter((o) => favIds.includes(o.id));
+        }
+
+        if (filtered.length === 0) {
+          offersDiv.innerHTML = "<p>Keine Angebote gefunden.</p>";
+          return;
+        }
+
+        filtered.forEach((offer) => {
+          const isFav = Storage.get(`favorite_${offer.id}`, false);
+
+          const card = document.createElement("article");
+          card.className = "meal-card";
+
+          const text = isEasyLang ? offer.text_easy : offer.beschreibung;
+
+          card.innerHTML = `
+            <h3>${offer.titel}</h3>
+            <p><strong>📍 ${offer.ort}</strong></p>
+            <p><strong>🕒 ${offer.uhrzeit}</strong></p>
+            <p>${text}</p>
+            <p><small>Für: ${offer.zielgruppe}</small></p>
+            <button class="btn btn-small favorite-btn" data-offer-id="${offer.id}">
+              ${isFav ? "❤️ Gemerkt" : "🤍 Merken"}
+            </button>
+          `;
+
+          card.querySelector(".favorite-btn").addEventListener("click", (e) => {
+            const offerId = e.target.dataset.offerId;
+            const isFav = Storage.get(`favorite_${offerId}`, false);
+
+            if (isFav) {
+              Storage.remove(`favorite_${offerId}`);
+              UI.showNotification("Aus Favoriten entfernt", "info");
+            } else {
+              Storage.set(`favorite_${offerId}`, { offerId, date: new Date().toISOString() });
+              UI.showNotification("Zu Favoriten hinzugefügt!", "success");
+            }
+            renderOffers(filter);
+          });
+
+          offersDiv.appendChild(card);
+        });
+      };
+
+      renderOffers();
+
+      // Filter Handler
+      filterDiv.querySelectorAll(".btn-filter").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          filterDiv.querySelectorAll(".btn-filter").forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          renderOffers(btn.dataset.filter);
+        });
+      });
+
+      contentDiv.appendChild(offersDiv);
+
+      // Hilfe
+      contentDiv.appendChild(
+        UI.createHelpBox("Klick auf 'Merken' um deine Lieblings-Angebote zu speichern.")
+      );
+
+      container.appendChild(contentDiv);
+      container.appendChild(renderFooter("main.page-content"));
+    }
+
+    initPage();
+  </script>
+</body>
+</html>

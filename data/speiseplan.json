@@ -1,0 +1,44 @@
+{
+  "woche": [
+    {
+      "tag": "Montag",
+      "datum": "03.02.2025",
+      "mittag": "Pasta mit Tomatensoße",
+      "beilage": "Salat",
+      "nachtisch": "Joghurt mit Obst",
+      "text_easy": "Nudelgericht mit Salat."
+    },
+    {
+      "tag": "Dienstag",
+      "datum": "04.02.2025",
+      "mittag": "Hähnchenschnitzel",
+      "beilage": "Kartoffeln und Gemüse",
+      "nachtisch": "Pudding",
+      "text_easy": "Hähnchen mit Kartoffeln."
+    },
+    {
+      "tag": "Mittwoch",
+      "datum": "05.02.2025",
+      "mittag": "Fischfilet",
+      "beilage": "Reis und Brokkoli",
+      "nachtisch": "Obstbecher",
+      "text_easy": "Fisch mit Reis und Gemüse."
+    },
+    {
+      "tag": "Donnerstag",
+      "datum": "06.02.2025",
+      "mittag": "Rinderbraten",
+      "beilage": "Kartoffelpüree und Blaukraut",
+      "nachtisch": "Schokoladenpudding",
+      "text_easy": "Fleischgericht mit Kartoffeln."
+    },
+    {
+      "tag": "Freitag",
+      "datum": "07.02.2025",
+      "mittag": "Pizzaschnitte",
+      "beilage": "Gemüsesticks",
+      "nachtisch": "Vanilleeiscreme",
+      "text_easy": "Pizza-Brot mit Gemüse."
+    }
+  ]
+}

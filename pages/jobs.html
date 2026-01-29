@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jobbörse - Oberlinhaus Werkstatt</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <main class="container page-content"></main>
+
+  <script src="../components/storage.js"></script>
+  <script src="../components/api.js"></script>
+  <script src="../components/ui.js"></script>
+  <script src="../components/header.js"></script>
+  <script>
+    async function initPage() {
+      const container = document.querySelector("main");
+      const contentDiv = document.createElement("section");
+      contentDiv.className = "page-section";
+
+      // Header
+      container.appendChild(renderHeader("Jobbörse", true));
+
+      // Placeholder: Keine Jobs Daten-Datei, daher einfache Demo
+      const jobsDiv = document.createElement("div");
+      jobsDiv.className = "info-box highlight";
+      jobsDiv.innerHTML = `
+        <h3>🔨 Jobbörse</h3>
+        <p>Hier werden bald aktuelle Job-Angebote angezeigt.</p>
+        <p><strong>Für Fragen:</strong> Marco Müller 030-654321 (Mo-Fr 08:00-16:00)</p>
+      `;
+
+      contentDiv.appendChild(jobsDiv);
+
+      // Kontakt Info
+      const contactDiv = document.createElement("div");
+      contactDiv.className = "help-box";
+      contactDiv.innerHTML = `
+        <strong>📞 Jobcoaching:</strong>
+        <p>Marco hilft dir bei der Jobsuche und Bewerbungen.</p>
+        <a href="./kontakt.html" class="btn" style="display: inline-block; margin-top: 1rem;">
+          Zu den Ansprechpartnern
+        </a>
+      `;
+
+      contentDiv.appendChild(contactDiv);
+
+      container.appendChild(contentDiv);
+      container.appendChild(renderFooter("main.page-content"));
+    }
+
+    initPage();
+  </script>
+</body>
+</html>

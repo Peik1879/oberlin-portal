@@ -1,0 +1,26 @@
+{
+  "umfragen": [
+    {
+      "id": 1,
+      "frage": "Wie zufrieden bist du mit dem Essen?",
+      "text_easy": "Schmeckt dir das Essen?",
+      "optionen": [
+        { "text": "Sehr zufrieden", "text_easy": "Sehr gut" },
+        { "text": "Zufrieden", "text_easy": "Gut" },
+        { "text": "Neutral", "text_easy": "OK" },
+        { "text": "Weniger zufrieden", "text_easy": "Nicht gut" }
+      ]
+    },
+    {
+      "id": 2,
+      "frage": "Welches Angebot interessiert dich am meisten?",
+      "text_easy": "Was magst du gern?",
+      "optionen": [
+        { "text": "Yoga", "text_easy": "Yoga" },
+        { "text": "Kreativwerkstatt", "text_easy": "Basteln" },
+        { "text": "Spaziergang", "text_easy": "Spaziergang" },
+        { "text": "Computertraining", "text_easy": "Computer" }
+      ]
+    }
+  ]
+}

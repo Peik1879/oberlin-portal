@@ -1,0 +1,20 @@
+{
+  "meldungen": [
+    {
+      "id": 1,
+      "kategorie": "wichtig",
+      "titel": "Werkstatt Montag geschlossen",
+      "datum": "29.01.2025",
+      "text": "Nächsten Montag (03.02.) ist die Werkstatt wegen Betriebsfeier geschlossen.",
+      "text_easy": "Montag zu. Betriebsfest."
+    },
+    {
+      "id": 2,
+      "kategorie": "info",
+      "titel": "Neue Öffnungszeit Freitag",
+      "datum": "28.01.2025",
+      "text": "Ab Februar endet der Freitag um 14 Uhr statt 17 Uhr.",
+      "text_easy": "Freitag früher zu: 14 Uhr."
+    }
+  ]
+}

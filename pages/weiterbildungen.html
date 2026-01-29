@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Weiterbildungen - Oberlinhaus Werkstatt</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <main class="container page-content"></main>
+
+  <script src="../components/storage.js"></script>
+  <script src="../components/api.js"></script>
+  <script src="../components/ui.js"></script>
+  <script src="../components/header.js"></script>
+  <script>
+    async function initPage() {
+      const container = document.querySelector("main");
+      const contentDiv = document.createElement("section");
+      contentDiv.className = "page-section";
+
+      // Header
+      container.appendChild(renderHeader("Weiterbildungen", true));
+
+      const isEasyLang = Storage.get("easyLang", false);
+      const data = await API.loadJSON("weiterbildungen");
+
+      if (!data) {
+        contentDiv.innerHTML += "<p>Weiterbildungen konnte nicht geladen werden.</p>";
+        container.appendChild(contentDiv);
+        container.appendChild(renderFooter());
+        return;
+      }
+
+      // Kurse anzeigen
+      const coursesDiv = document.createElement("div");
+      coursesDiv.className = "courses-list";
+
+      data.kurse.forEach((course) => {
+        const isFav = Storage.get(`course_${course.id}`, false);
+
+        const card = document.createElement("article");
+        card.className = "meal-card";
+
+        const text = isEasyLang ? course.text_easy : course.beschreibung;
+
+        card.innerHTML = `
+          <h3>${course.titel}</h3>
+          <p><strong>📅 Start:</strong> ${course.start}</p>
+          <p><strong>⏱️ Dauer:</strong> ${course.dauer}</p>
+          <p><strong>📍 Ort:</strong> ${course.ort}</p>
+          <p>${text}</p>
+          <button class="btn interest-btn" data-course-id="${course.id}">
+            ${isFav ? "✅ Ich interessiere mich" : "➕ Ich interessiere mich"}
+          </button>
+        `;
+
+        card.querySelector(".interest-btn").addEventListener("click", (e) => {
+          const courseId = e.target.dataset.courseId;
+          const isFav = Storage.get(`course_${courseId}`, false);
+
+          if (!isFav) {
+            Storage.set(`course_${courseId}`, { courseId, date: new Date().toISOString() });
+            UI.showNotification("Du hast Interesse angemeldet!", "success");
+          } else {
+            Storage.remove(`course_${courseId}`);
+            UI.showNotification("Interesse entfernt", "info");
+          }
+
+          // Refresh
+          setTimeout(() => window.location.reload(), 1000);
+        });
+
+        coursesDiv.appendChild(card);
+      });
+
+      contentDiv.appendChild(coursesDiv);
+
+      // Hilfe
+      contentDiv.appendChild(
+        UI.createHelpBox(
+          isEasyLang
+            ? "Klick 'Ich interessiere mich' um dich für einen Kurs anzumelden."
+            : "Klicken Sie auf 'Ich interessiere mich' um sich für den Kurs anzumelden."
+        )
+      );
+
+      container.appendChild(contentDiv);
+      container.appendChild(renderFooter("main.page-content"));
+    }
+
+    initPage();
+  </script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fahrkarten - Oberlinhaus Werkstatt</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <main class="container page-content"></main>
+
+  <script src="../components/storage.js"></script>
+  <script src="../components/api.js"></script>
+  <script src="../components/ui.js"></script>
+  <script src="../components/header.js"></script>
+  <script>
+    async function initPage() {
+      const container = document.querySelector("main");
+      const contentDiv = document.createElement("section");
+      contentDiv.className = "page-section";
+
+      // Header
+      container.appendChild(renderHeader("Fahrkarten", true));
+
+      const isEasyLang = Storage.get("easyLang", false);
+
+      // Hinweis
+      const notice = document.createElement("div");
+      notice.className = "notice";
+      notice.innerHTML =
+        "💾 Dateien werden <strong>nicht</strong> ins Internet hochgeladen, nur lokal auf diesem Gerät gespeichert.";
+      contentDiv.appendChild(notice);
+
+      // Upload Bereich
+      const uploadDiv = document.createElement("div");
+      uploadDiv.className = "upload-section";
+
+      const uploadLabel = document.createElement("label");
+      uploadLabel.className = "upload";
+      uploadLabel.style.display = "block";
+      uploadLabel.innerHTML = `
+        <input type="file" id="fileInput" accept="image/*,.pdf" />
+        <span>📤 Datei auswählen</span>
+      `;
+
+      uploadDiv.appendChild(uploadLabel);
+
+      // File Info
+      const fileInfo = document.createElement("div");
+      fileInfo.id = "fileInfo";
+      fileInfo.style.marginTop = "1rem";
+      uploadDiv.appendChild(fileInfo);
+
+      const fileInput = uploadLabel.querySelector("#fileInput");
+      fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const entry = {
+            id: Date.now(),
+            name: file.name,
+            size: file.size,
+            type: file.type,
+            date: new Date().toLocaleString("de-DE"),
+          };
+
+          Storage.set(`ticket_${entry.id}`, entry);
+
+          fileInfo.innerHTML = `
+            <div class="info-box">
+              <strong>✅ Datei gespeichert!</strong>
+              <p><strong>Name:</strong> ${entry.name}</p>
+              <p><strong>Größe:</strong> ${(entry.size / 1024).toFixed(2)} KB</p>
+              <p><strong>Gespeichert:</strong> ${entry.date}</p>
+            </div>
+          `;
+
+          UI.showNotification("Fahrkarte gespeichert!", "success");
+          renderTickets();
+        }
+      });
+
+      contentDiv.appendChild(uploadDiv);
+
+      // Gespeicherte Fahrkarten
+      const ticketsDiv = document.createElement("div");
+      ticketsDiv.id = "ticketsList";
+      ticketsDiv.className = "tickets-list";
+      contentDiv.appendChild(ticketsDiv);
+
+      const renderTickets = () => {
+        ticketsDiv.innerHTML = "<h3>Gespeicherte Fahrkarten</h3>";
+        const tickets = Storage.list("ticket_");
+
+        if (tickets.length === 0) {
+          ticketsDiv.innerHTML += "<p>Keine Fahrkarten gespeichert.</p>";
+        } else {
+          const listDiv = document.createElement("div");
+          listDiv.className = "entries-list";
+
+          tickets
+            .sort((a, b) => b.value.id - a.value.id)
+            .forEach((ticket) => {
+              const item = document.createElement("div");
+              item.className = "entry-item";
+              item.innerHTML = `
+                <div>
+                  <strong>📄 ${ticket.value.name}</strong>
+                  <p><small>${ticket.value.size > 1024 ? (ticket.value.size / 1024).toFixed(1) + " KB" : ticket.value.size + " B"}</small></p>
+                  <p><small>Gespeichert: ${ticket.value.date}</small></p>
+                </div>
+                <button class="btn btn-small delete-ticket" data-id="${ticket.value.id}">🗑️ Löschen</button>
+              `;
+
+              item.querySelector(".delete-ticket").addEventListener("click", () => {
+                Storage.remove(`ticket_${ticket.value.id}`);
+                UI.showNotification("Fahrkarte gelöscht", "info");
+                renderTickets();
+              });
+
+              listDiv.appendChild(item);
+            });
+
+          ticketsDiv.appendChild(listDiv);
+        }
+      };
+
+      renderTickets();
+
+      // Hilfe
+      contentDiv.appendChild(
+        UI.createHelpBox(
+          isEasyLang
+            ? "Klick 'Datei auswählen'. Deine Fahrkarte bleibt nur auf deinem Gerät."
+            : "Wählen Sie eine Fahrkarte aus. Diese werden lokal gespeichert und nicht online übertragen."
+        )
+      );
+
+      container.appendChild(contentDiv);
+      container.appendChild(renderFooter("main.page-content"));
+    }
+
+    initPage();
+  </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+{
+  "kontakte": [
+    {
+      "id": 1,
+      "name": "Julia Schmidt",
+      "rolle": "Fahrdienst-Koordination",
+      "themen": ["fahrdienst", "abholung"],
+      "telefon": "030-123456",
+      "erreichbarkeit": {
+        "montag": "09:00 - 17:00",
+        "dienstag": "09:00 - 17:00",
+        "mittwoch": "09:00 - 17:00",
+        "donnerstag": "09:00 - 17:00",
+        "freitag": "09:00 - 14:00"
+      },
+      "text_easy": "Julia organisiert Fahrten."
+    },
+    {
+      "id": 2,
+      "name": "Marco Müller",
+      "rolle": "Arbeitsvorbereiter",
+      "themen": ["arbeit", "einsatz", "jobcoaching"],
+      "telefon": "030-654321",
+      "erreichbarkeit": {
+        "montag": "08:00 - 16:00",
+        "dienstag": "08:00 - 16:00",
+        "mittwoch": "08:00 - 16:00",
+        "donnerstag": "08:00 - 16:00",
+        "freitag": "08:00 - 16:00"
+      },
+      "text_easy": "Marco hilft bei der Arbeit."
+    },
+    {
+      "id": 3,
+      "name": "Lisa Wagner",
+      "rolle": "Krankmeldungen & Abwesenheit",
+      "themen": ["krankmeldung", "abwesenheit", "urlaub"],
+      "telefon": "030-789012",
+      "erreichbarkeit": {
+        "montag": "07:00 - 09:00",
+        "dienstag": "07:00 - 09:00",
+        "mittwoch": "07:00 - 09:00",
+        "donnerstag": "07:00 - 09:00",
+        "freitag": "07:00 - 09:00"
+      },
+      "text_easy": "Lisa für Krankmeldungen. Morgens anrufen."
+    }
+  ]
+}

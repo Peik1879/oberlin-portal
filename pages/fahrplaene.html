@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fahrpläne & Abholung - Oberlinhaus Werkstatt</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <main class="container page-content"></main>
+
+  <script src="../components/storage.js"></script>
+  <script src="../components/api.js"></script>
+  <script src="../components/ui.js"></script>
+  <script src="../components/header.js"></script>
+  <script>
+    async function initPage() {
+      const container = document.querySelector("main");
+      const contentDiv = document.createElement("section");
+      contentDiv.className = "page-section";
+
+      // Header
+      container.appendChild(renderHeader("Fahrpläne & Abholung", true));
+
+      // Externe Links
+      const linksDiv = document.createElement("div");
+      linksDiv.className = "links-section";
+
+      const links = [
+        {
+          title: "🚌 Berlin Fahrpläne (BVG)",
+          url: "https://www.bvg.de",
+          desc: "Öffentliche Verkehrsmittel in Berlin",
+        },
+        {
+          title: "🚕 Abholdienst",
+          url: "tel:030-123456",
+          desc: "Julia: 030-123456 (Mo-Fr 09:00-17:00)",
+        },
+        {
+          title: "📱 Fahrdienst-Anfragen",
+          url: "./kontakt.html",
+          desc: "Zu den Ansprechpartnern",
+        },
+      ];
+
+      links.forEach((link) => {
+        const btn = document.createElement("a");
+        btn.href = link.url;
+        if (link.url.startsWith("http")) {
+          btn.target = "_blank";
+          btn.rel = "noopener noreferrer";
+        }
+        btn.className = "btn btn-link-card";
+        btn.innerHTML = `
+          <strong>${link.title}</strong>
+          <p>${link.desc}</p>
+        `;
+        linksDiv.appendChild(btn);
+      });
+
+      contentDiv.appendChild(linksDiv);
+
+      // Info
+      const infoDiv = document.createElement("div");
+      infoDiv.className = "info-box";
+      infoDiv.innerHTML = `
+        <h3>ℹ️ Fahrdienst-Info</h3>
+        <p>Für Fragen zur Abholung: Julia Schmidt 030-123456</p>
+        <p><small>Erreichbar: Mo-Fr 09:00-17:00 Uhr</small></p>
+      `;
+
+      contentDiv.appendChild(infoDiv);
+
+      // Hilfe
+      contentDiv.appendChild(
+        UI.createHelpBox(
+          "Klick auf die Links um zum Fahrplan oder zum Abholdienst zu kommen."
+        )
+      );
+
+      container.appendChild(contentDiv);
+      container.appendChild(renderFooter("main.page-content"));
+    }
+
+    initPage();
+  </script>
+</body>
+</html>

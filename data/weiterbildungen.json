@@ -1,0 +1,22 @@
+{
+  "kurse": [
+    {
+      "id": 1,
+      "titel": "Computerkurs für Anfänger",
+      "beschreibung": "Einstieg in E-Mail, Internet, Textverarbeitung.",
+      "start": "10.02.2025",
+      "dauer": "8 Wochen",
+      "ort": "EDV-Raum",
+      "text_easy": "Computer lernen. 8 Wochen."
+    },
+    {
+      "id": 2,
+      "titel": "Deutschkurs B1",
+      "beschreibung": "Für Menschen, die Deutsch verbessern möchten.",
+      "start": "17.02.2025",
+      "dauer": "12 Wochen",
+      "ort": "Klassenzimmer 2",
+      "text_easy": "Deutsch verbessern. 12 Wochen."
+    }
+  ]
+}

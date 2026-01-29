@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ansprechpartner - Oberlinhaus Werkstatt</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <main class="container page-content"></main>
+
+  <script src="../components/storage.js"></script>
+  <script src="../components/api.js"></script>
+  <script src="../components/ui.js"></script>
+  <script src="../components/header.js"></script>
+  <script>
+    async function initPage() {
+      const container = document.querySelector("main");
+      const contentDiv = document.createElement("section");
+      contentDiv.className = "page-section";
+
+      // Header
+      container.appendChild(renderHeader("Wer hilft?", true));
+
+      const isEasyLang = Storage.get("easyLang", false);
+      const data = await API.loadJSON("ansprechpartner");
+
+      if (!data) {
+        contentDiv.innerHTML += "<p>Ansprechpartner konnte nicht geladen werden.</p>";
+        container.appendChild(contentDiv);
+        container.appendChild(renderFooter());
+        return;
+      }
+
+      // Filter Buttons
+      const filterDiv = document.createElement("div");
+      filterDiv.className = "filter-buttons";
+
+      const allBtn = document.createElement("button");
+      allBtn.className = "btn btn-filter active";
+      allBtn.textContent = "Alle";
+      allBtn.dataset.filter = "";
+
+      filterDiv.appendChild(allBtn);
+
+      const themes = new Set();
+      data.kontakte.forEach((k) => {
+        k.themen.forEach((t) => themes.add(t));
+      });
+
+      themes.forEach((theme) => {
+        const btn = document.createElement("button");
+        btn.className = "btn btn-filter";
+        btn.textContent = this.themeLabels?.[theme] || theme;
+        btn.dataset.filter = theme;
+        filterDiv.appendChild(btn);
+      });
+
+      contentDiv.appendChild(filterDiv);
+
+      // Kontakt-Karten
+      const contactsDiv = document.createElement("div");
+      contactsDiv.className = "contacts-grid";
+      contactsDiv.id = "contactsList";
+
+      const renderContacts = (filter = "") => {
+        contactsDiv.innerHTML = "";
+
+        const filtered = filter
+          ? data.kontakte.filter((k) => k.themen.includes(filter))
+          : data.kontakte;
+
+        filtered.forEach((contact) => {
+          const card = document.createElement("article");
+          card.className = "contact-card";
+
+          const text = isEasyLang ? contact.text_easy : contact.beschreibung || contact.rolle;
+          const erreichbarkeit = Object.entries(contact.erreichbarkeit)
+            .map(([day, time]) => `${day}: ${time}`)
+            .join(", ");
+
+          card.innerHTML = `
+            <h3>${contact.name}</h3>
+            <p class="role">${contact.rolle}</p>
+            <p>${text}</p>
+            <div class="contact-info">
+              <strong>Telefon:</strong>
+              <a href="tel:${contact.telefon.replace(/\s/g, "")}" class="btn-link">
+                📞 ${contact.telefon}
+              </a>
+            </div>
+            <div class="contact-info">
+              <strong>Erreichbar:</strong>
+              <p><small>${erreichbarkeit}</small></p>
+            </div>
+          `;
+
+          contactsDiv.appendChild(card);
+        });
+      };
+
+      renderContacts();
+
+      // Filter Event Listeners
+      filterDiv.querySelectorAll(".btn-filter").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          filterDiv
+            .querySelectorAll(".btn-filter")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          renderContacts(btn.dataset.filter);
+        });
+      });
+
+      contentDiv.appendChild(contactsDiv);
+
+      // Hilfe
+      contentDiv.appendChild(
+        UI.createHelpBox(
+          isEasyLang
+            ? "Drück auf die grüne Telefon-Taste zum Anrufen."
+            : "Klicke auf die Telefonnummer um anzurufen."
+        )
+      );
+
+      container.appendChild(contentDiv);
+      container.appendChild(renderFooter("main.page-content"));
+    }
+
+    initPage();
+  </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Umfragen - Oberlinhaus Werkstatt</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <main class="container page-content"></main>
+
+  <script src="../components/storage.js"></script>
+  <script src="../components/api.js"></script>
+  <script src="../components/ui.js"></script>
+  <script src="../components/header.js"></script>
+  <script>
+    async function initPage() {
+      const container = document.querySelector("main");
+      const contentDiv = document.createElement("section");
+      contentDiv.className = "page-section";
+
+      // Header
+      container.appendChild(renderHeader("Umfragen", true));
+
+      const isEasyLang = Storage.get("easyLang", false);
+      const data = await API.loadJSON("umfragen");
+
+      if (!data || !data.umfragen) {
+        contentDiv.innerHTML += "<p>Umfragen konnte nicht geladen werden.</p>";
+        container.appendChild(contentDiv);
+        container.appendChild(renderFooter());
+        return;
+      }
+
+      // Umfragen anzeigen
+      data.umfragen.forEach((survey) => {
+        const surveyDiv = document.createElement("article");
+        surveyDiv.className = "survey-card";
+
+        const frage = isEasyLang ? survey.text_easy : survey.frage;
+        const answered = Storage.get(`survey_${survey.id}`, null);
+
+        surveyDiv.innerHTML = `<h3>${frage}</h3>`;
+
+        if (answered) {
+          surveyDiv.innerHTML += `
+            <div class="survey-answered">
+              <strong>✅ Du hast bereits geantwortet:</strong>
+              <p>${answered}</p>
+              <button class="btn btn-small reset-survey" data-survey-id="${survey.id}">
+                Antwort ändern
+              </button>
+            </div>
+          `;
+        } else {
+          const optionsDiv = document.createElement("div");
+          optionsDiv.className = "survey-options";
+
+          survey.optionen.forEach((option, index) => {
+            const label = document.createElement("label");
+            label.className = "survey-option";
+
+            const optionText = isEasyLang ? option.text_easy : option.text;
+            label.innerHTML = `
+              <input type="radio" name="survey_${survey.id}" value="${optionText}" />
+              <span>${optionText}</span>
+            `;
+
+            label.addEventListener("change", () => {
+              Storage.set(`survey_${survey.id}`, optionText);
+              UI.showNotification("✅ Antwort gespeichert! Danke!", "success");
+              setTimeout(() => window.location.reload(), 1500);
+            });
+
+            optionsDiv.appendChild(label);
+          });
+
+          surveyDiv.appendChild(optionsDiv);
+        }
+
+        contentDiv.appendChild(surveyDiv);
+      });
+
+      // Reset-Button Handler
+      contentDiv.addEventListener("click", (e) => {
+        if (e.target.classList.contains("reset-survey")) {
+          const surveyId = e.target.dataset.surveyId;
+          Storage.remove(`survey_${surveyId}`);
+          UI.showNotification("Antwort zurückgesetzt", "info");
+          setTimeout(() => window.location.reload(), 1000);
+        }
+      });
+
+      // Hilfe
+      contentDiv.appendChild(
+        UI.createHelpBox(
+          "Klick eine Antwort an. Deine Antwort wird sofort gespeichert."
+        )
+      );
+
+      container.appendChild(contentDiv);
+      container.appendChild(renderFooter("main.page-content"));
+    }
+
+    initPage();
+  </script>
+</body>
+</html>

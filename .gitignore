@@ -1,0 +1,25 @@
+# Dependencies & Build Artifacts
+node_modules/
+*.log
+.DS_Store
+*.swp
+*.swo
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Deployment
+dist/
+build/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Misc
+.cache/
+.tmp/

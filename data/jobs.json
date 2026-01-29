@@ -1,0 +1,14 @@
+{
+  "jobs": [
+    {
+      "id": 1,
+      "titel": "Lagerhelfer (Vollzeit)",
+      "ort": "Berlin-Kreuzberg",
+      "arbeitszeit": "Vollzeit, 40 Std/Woche",
+      "beschreibung": "Unterstützung im Lagerbereich. Einfache Tätigkeiten, nettes Team.",
+      "anforderungen": "Körperliche Belastbarkeit, Zuverlässigkeit",
+      "ansprechpartner": "Marco Müller",
+      "text_easy": "Lagerarbeit in Berlin. Vollzeit. Einfache Aufgaben."
+    }
+  ]
+}

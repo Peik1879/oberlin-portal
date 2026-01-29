@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Meldungen - Oberlinhaus Werkstatt</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <main class="container page-content"></main>
+
+  <script src="../components/storage.js"></script>
+  <script src="../components/api.js"></script>
+  <script src="../components/ui.js"></script>
+  <script src="../components/header.js"></script>
+  <script>
+    async function initPage() {
+      const container = document.querySelector("main");
+      const contentDiv = document.createElement("section");
+      contentDiv.className = "page-section";
+
+      // Header
+      container.appendChild(renderHeader("Meldungen", true));
+
+      const isEasyLang = Storage.get("easyLang", false);
+      const data = await API.loadJSON("meldungen");
+
+      if (!data) {
+        contentDiv.innerHTML += "<p>Meldungen konnte nicht geladen werden.</p>";
+        container.appendChild(contentDiv);
+        container.appendChild(renderFooter());
+        return;
+      }
+
+      // Wichtige Meldung oben
+      const important = data.meldungen.find((m) => m.kategorie === "wichtig");
+      if (important) {
+        const banner = document.createElement("div");
+        banner.className = "banner important";
+        banner.setAttribute("role", "alert");
+        banner.setAttribute("aria-live", "assertive");
+        banner.innerHTML = `
+          <h3>⚠️ ${important.titel}</h3>
+          <p>${isEasyLang ? important.text_easy : important.text}</p>
+        `;
+        contentDiv.appendChild(banner);
+      }
+
+      // Alle Meldungen
+      const newsDiv = document.createElement("div");
+      newsDiv.className = "news-list";
+      newsDiv.setAttribute("aria-live", "polite");
+      newsDiv.setAttribute("aria-label", "Meldungen");
+
+      data.meldungen.forEach((msg) => {
+        const item = document.createElement("article");
+        item.className = "news-item";
+
+        const text = isEasyLang ? msg.text_easy : msg.text;
+
+        item.innerHTML = `
+          <div class="news-header">
+            <h3>${msg.titel}</h3>
+            <span class="news-date">${msg.datum}</span>
+          </div>
+          <p>${text}</p>
+        `;
+
+        newsDiv.appendChild(item);
+      });
+
+      contentDiv.appendChild(newsDiv);
+
+      // Hilfe
+      contentDiv.appendChild(
+        UI.createHelpBox(
+          "Hier siehst du wichtige Informationen zum Betrieb und zu Änderungen."
+        )
+      );
+
+      container.appendChild(contentDiv);
+      container.appendChild(renderFooter("main.page-content"));
+    }
+
+    initPage();
+  </script>
+</body>
+</html>

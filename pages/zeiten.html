@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Öffnungszeiten - Oberlinhaus Werkstatt</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <main class="container page-content"></main>
+
+  <script src="../components/storage.js"></script>
+  <script src="../components/api.js"></script>
+  <script src="../components/ui.js"></script>
+  <script src="../components/header.js"></script>
+  <script>
+    function getTodayName() {
+      const days = [
+        "sonntag",
+        "montag",
+        "dienstag",
+        "mittwoch",
+        "donnerstag",
+        "freitag",
+        "samstag",
+      ];
+      return days[new Date().getDay()];
+    }
+
+    async function initPage() {
+      const container = document.querySelector("main");
+      const contentDiv = document.createElement("section");
+      contentDiv.className = "page-section";
+
+      // Header
+      container.appendChild(renderHeader("Öffnungszeiten", true));
+
+      // Zeiten laden
+      const data = await API.loadJSON("zeiten");
+      if (!data) {
+        contentDiv.innerHTML += "<p>Öffnungszeiten konnte nicht geladen werden.</p>";
+        container.appendChild(contentDiv);
+        container.appendChild(renderFooter());
+        return;
+      }
+
+      const isEasyLang = Storage.get("easyLang", false);
+      const todayName = getTodayName();
+      const todayTime = data.normal[todayName];
+
+      // Heute-Box
+      const todayBox = document.createElement("div");
+      todayBox.className = "info-box highlight";
+      todayBox.setAttribute("role", "status");
+
+      if (todayTime === "Geschlossen") {
+        todayBox.innerHTML = `<h3>Heute geschlossen</h3>`;
+      } else {
+        todayBox.innerHTML = `
+          <h3>Heute geöffnet</h3>
+          <p><strong>${todayTime}</strong></p>
+          <p><small>${isEasyLang ? "Mittagessen: 12-13 Uhr." : "Mittagessen: 12:00 - 13:00 Uhr"}</small></p>
+        `;
+      }
+
+      contentDiv.appendChild(todayBox);
+
+      // Alle Zeiten
+      const timesDiv = document.createElement("div");
+      timesDiv.className = "times-grid";
+      timesDiv.innerHTML = "<h3>Öffnungszeiten pro Woche</h3>";
+
+      const dayLabels = {
+        montag: "Montag",
+        dienstag: "Dienstag",
+        mittwoch: "Mittwoch",
+        donnerstag: "Donnerstag",
+        freitag: "Freitag",
+        samstag: "Samstag",
+        sonntag: "Sonntag",
+      };
+
+      Object.entries(data.normal).forEach(([day, time]) => {
+        const dayCard = document.createElement("div");
+        dayCard.className = "time-card";
+        dayCard.innerHTML = `<strong>${dayLabels[day]}</strong><p>${time}</p>`;
+        timesDiv.appendChild(dayCard);
+      });
+
+      contentDiv.appendChild(timesDiv);
+
+      // Schließtage
+      if (data.schließtage?.length > 0) {
+        const closedDiv = document.createElement("div");
+        closedDiv.className = "closed-days";
+        closedDiv.innerHTML = "<h3>Schließtage</h3>";
+
+        data.schließtage.forEach((day) => {
+          const dayItem = document.createElement("div");
+          dayItem.className = "closed-item";
+          dayItem.innerHTML = `
+            <strong>${day.datum}</strong>
+            <p>${isEasyLang ? day.text_easy : day.grund}</p>
+          `;
+          closedDiv.appendChild(dayItem);
+        });
+
+        contentDiv.appendChild(closedDiv);
+      }
+
+      // Hilfe
+      contentDiv.appendChild(
+        UI.createHelpBox("Fragen zu Öffnungszeiten? Julia 030-123456")
+      );
+
+      container.appendChild(contentDiv);
+      container.appendChild(renderFooter("main.page-content"));
+    }
+
+    initPage();
+  </script>
+</body>
+</html>

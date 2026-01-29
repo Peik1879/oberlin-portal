@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Speiseplan - Oberlinhaus Werkstatt</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <main class="container page-content"></main>
+
+  <script src="../components/storage.js"></script>
+  <script src="../components/api.js"></script>
+  <script src="../components/ui.js"></script>
+  <script src="../components/header.js"></script>
+  <script>
+    async function initPage() {
+      const container = document.querySelector("main");
+
+      // Header
+      container.appendChild(renderHeader("Speiseplan", true));
+
+      // Inhalts-Sektion
+      const contentDiv = document.createElement("section");
+      contentDiv.className = "page-section";
+
+      // Wichtige Meldung laden
+      const meldungen = await API.loadJSON("meldungen");
+      if (meldungen?.meldungen?.length > 0) {
+        const important = meldungen.meldungen.find(
+          (m) => m.kategorie === "wichtig"
+        );
+        if (important) {
+          const banner = document.createElement("div");
+          banner.className = "banner important";
+          banner.setAttribute("role", "alert");
+          banner.innerHTML = `<strong>${important.titel}</strong><p>${important.text}</p>`;
+          contentDiv.appendChild(banner);
+        }
+      }
+
+      // Speiseplan laden
+      const data = await API.loadJSON("speiseplan");
+      if (!data) {
+        contentDiv.innerHTML += "<p>Speiseplan konnte nicht geladen werden.</p>";
+        container.appendChild(contentDiv);
+        container.appendChild(renderFooter());
+        return;
+      }
+
+      const isEasyLang = Storage.get("easyLang", false);
+
+      // Speiseplan anzeigen
+      const planDiv = document.createElement("div");
+      planDiv.className = "meal-plan";
+
+      data.woche.forEach((day) => {
+        const dayCard = document.createElement("article");
+        dayCard.className = "meal-card";
+
+        if (isEasyLang) {
+          dayCard.innerHTML = `
+            <h3>${day.tag}</h3>
+            <p><strong>${day.text_easy}</strong></p>
+            <p><small>${day.datum}</small></p>
+          `;
+        } else {
+          dayCard.innerHTML = `
+            <h3>${day.tag} (${day.datum})</h3>
+            <p><strong>Hauptgang:</strong> ${day.mittag}</p>
+            <p><strong>Beilage:</strong> ${day.beilage}</p>
+            <p><strong>Nachtisch:</strong> ${day.nachtisch}</p>
+          `;
+        }
+
+        planDiv.appendChild(dayCard);
+      });
+
+      contentDiv.appendChild(planDiv);
+
+      // Druckfunktion
+      const printBtn = document.createElement("button");
+      printBtn.className = "btn";
+      printBtn.textContent = "🖨️ Als PDF drucken";
+      printBtn.addEventListener("click", () => window.print());
+      contentDiv.appendChild(printBtn);
+
+      // Hilfe-Box
+      contentDiv.appendChild(
+        UI.createHelpBox(
+          "Wenn Fragen zum Essen: Marco Müller 030-654321 (Mo-Fr 08:00-16:00)"
+        )
+      );
+
+      container.appendChild(contentDiv);
+
+      // Footer
+      container.appendChild(renderFooter("main.page-content"));
+    }
+
+    initPage();
+  </script>
+</body>
+</html>

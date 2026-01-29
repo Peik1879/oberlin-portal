@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lebenslauf - Oberlinhaus Werkstatt</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <main class="container page-content"></main>
+
+  <script src="../components/storage.js"></script>
+  <script src="../components/api.js"></script>
+  <script src="../components/ui.js"></script>
+  <script src="../components/header.js"></script>
+  <script>
+    async function initPage() {
+      const container = document.querySelector("main");
+      const contentDiv = document.createElement("section");
+      contentDiv.className = "page-section";
+
+      // Header
+      container.appendChild(renderHeader("Lebenslauf & Dokumente", true));
+
+      const isEasyLang = Storage.get("easyLang", false);
+
+      // Hinweis
+      const notice = document.createElement("div");
+      notice.className = "notice";
+      notice.innerHTML =
+        "💾 Dokumente werden <strong>nicht</strong> ins Internet hochgeladen, nur lokal auf diesem Gerät gespeichert.";
+      contentDiv.appendChild(notice);
+
+      // Upload Bereich
+      const uploadDiv = document.createElement("div");
+      uploadDiv.className = "upload-section";
+
+      const uploadLabel = document.createElement("label");
+      uploadLabel.className = "upload";
+      uploadLabel.style.display = "block";
+      uploadLabel.innerHTML = `
+        <input type="file" id="fileInput" accept=".pdf,.doc,.docx" />
+        <span>📤 Datei auswählen</span>
+      `;
+
+      uploadDiv.appendChild(uploadLabel);
+
+      // Kategorie
+      const catDiv = document.createElement("div");
+      catDiv.style.marginTop = "1rem";
+      catDiv.innerHTML = `
+        <label for="category">Dokumenttyp:</label>
+        <select id="category" style="padding: 0.75rem; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; margin-top: 0.5rem;">
+          <option value="lebenslauf">Lebenslauf</option>
+          <option value="zeugnis">Zeugnis</option>
+          <option value="bescheinigung">Bescheinigung</option>
+          <option value="sonstiges">Sonstiges</option>
+        </select>
+      `;
+      uploadDiv.appendChild(catDiv);
+
+      // File Info
+      const fileInfo = document.createElement("div");
+      fileInfo.id = "fileInfo";
+      fileInfo.style.marginTop = "1rem";
+      uploadDiv.appendChild(fileInfo);
+
+      const fileInput = uploadLabel.querySelector("#fileInput");
+      fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const category = document.getElementById("category").value;
+          const entry = {
+            id: Date.now(),
+            name: file.name,
+            size: file.size,
+            type: file.type,
+            category: category,
+            date: new Date().toLocaleString("de-DE"),
+          };
+
+          Storage.set(`cv_${entry.id}`, entry);
+
+          fileInfo.innerHTML = `
+            <div class="info-box">
+              <strong>✅ Dokument gespeichert!</strong>
+              <p><strong>Typ:</strong> ${category}</p>
+              <p><strong>Datei:</strong> ${entry.name}</p>
+              <p><strong>Größe:</strong> ${(entry.size / 1024).toFixed(2)} KB</p>
+            </div>
+          `;
+
+          UI.showNotification("Dokument gespeichert!", "success");
+          renderDocs();
+        }
+      });
+
+      contentDiv.appendChild(uploadDiv);
+
+      // Gespeicherte Dokumente
+      const docsDiv = document.createElement("div");
+      docsDiv.id = "docsList";
+      docsDiv.className = "docs-list";
+      contentDiv.appendChild(docsDiv);
+
+      const renderDocs = () => {
+        docsDiv.innerHTML = "<h3>Gespeicherte Dokumente</h3>";
+        const docs = Storage.list("cv_");
+
+        if (docs.length === 0) {
+          docsDiv.innerHTML += "<p>Keine Dokumente gespeichert.</p>";
+        } else {
+          const listDiv = document.createElement("div");
+          listDiv.className = "entries-list";
+
+          docs
+            .sort((a, b) => b.value.id - a.value.id)
+            .forEach((doc) => {
+              const item = document.createElement("div");
+              item.className = "entry-item";
+              item.innerHTML = `
+                <div>
+                  <strong>📄 ${doc.value.name}</strong>
+                  <p><small>Typ: ${doc.value.category}</small></p>
+                  <p><small>${(doc.value.size / 1024).toFixed(1)} KB</small></p>
+                </div>
+                <button class="btn btn-small delete-doc" data-id="${doc.value.id}">🗑️ Löschen</button>
+              `;
+
+              item.querySelector(".delete-doc").addEventListener("click", () => {
+                Storage.remove(`cv_${doc.value.id}`);
+                UI.showNotification("Dokument gelöscht", "info");
+                renderDocs();
+              });
+
+              listDiv.appendChild(item);
+            });
+
+          docsDiv.appendChild(listDiv);
+        }
+      };
+
+      renderDocs();
+
+      // Hilfe
+      contentDiv.appendChild(
+        UI.createHelpBox(
+          "Speichere deine Dokumente hier. Sie werden nur auf diesem Gerät gespeichert."
+        )
+      );
+
+      container.appendChild(contentDiv);
+      container.appendChild(renderFooter("main.page-content"));
+    }
+
+    initPage();
+  </script>
+</body>
+</html>

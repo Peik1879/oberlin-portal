@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Anwesenheit - Oberlinhaus Werkstatt</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <main class="container page-content"></main>
+
+  <script src="../components/storage.js"></script>
+  <script src="../components/api.js"></script>
+  <script src="../components/ui.js"></script>
+  <script src="../components/header.js"></script>
+  <script>
+    async function initPage() {
+      const container = document.querySelector("main");
+      const contentDiv = document.createElement("section");
+      contentDiv.className = "page-section";
+
+      // Header
+      container.appendChild(renderHeader("Anwesenheit", true));
+
+      const isEasyLang = Storage.get("easyLang", false);
+
+      // Hinweis
+      const notice = document.createElement("div");
+      notice.className = "notice";
+      notice.innerHTML =
+        "💾 Deine Einträge werden nur auf diesem Gerät gespeichert (nicht im Internet).";
+      contentDiv.appendChild(notice);
+
+      // Formular
+      const form = document.createElement("form");
+      form.className = "form attendance-form";
+
+      // Name
+      const nameDiv = document.createElement("div");
+      nameDiv.className = "form-group";
+      nameDiv.innerHTML = `
+        <label for="name">Dein Name:</label>
+        <input type="text" id="name" name="name" required aria-required="true" />
+      `;
+      form.appendChild(nameDiv);
+
+      // Datum
+      const today = new Date().toISOString().split("T")[0];
+      const dateDiv = document.createElement("div");
+      dateDiv.className = "form-group";
+      dateDiv.innerHTML = `
+        <label for="date">Datum:</label>
+        <input type="date" id="date" name="date" value="${today}" required />
+      `;
+      form.appendChild(dateDiv);
+
+      // Status
+      const statusDiv = document.createElement("div");
+      statusDiv.className = "form-group";
+      statusDiv.innerHTML = `
+        <label for="status">Status:</label>
+        <select id="status" name="status" required>
+          <option value="anwesend">✅ Anwesend</option>
+          <option value="krank">🤒 Krank</option>
+          <option value="urlaub">🏖️ Urlaub</option>
+          <option value="fehlt">❌ Fehlt</option>
+        </select>
+      `;
+      form.appendChild(statusDiv);
+
+      // Notiz
+      const noteDiv = document.createElement("div");
+      noteDiv.className = "form-group";
+      noteDiv.innerHTML = `
+        <label for="note">Notiz (optional):</label>
+        <textarea id="note" name="note" rows="3" placeholder="z.B. Zahnarzt um 14 Uhr"></textarea>
+      `;
+      form.appendChild(noteDiv);
+
+      // Submit Button
+      const submitBtn = document.createElement("button");
+      submitBtn.type = "submit";
+      submitBtn.className = "btn btn-primary";
+      submitBtn.textContent = "Speichern";
+      form.appendChild(submitBtn);
+
+      // Form Submit
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const entry = {
+          id: Date.now(),
+          name: document.getElementById("name").value,
+          date: document.getElementById("date").value,
+          status: document.getElementById("status").value,
+          note: document.getElementById("note").value,
+          timestamp: new Date().toISOString(),
+        };
+
+        Storage.set(`attendance_${entry.id}`, entry);
+        UI.showNotification("✅ Eintrag gespeichert!", "success");
+
+        // Formular zurücksetzen
+        form.reset();
+        document.getElementById("date").value = today;
+
+        // Einträge aktualisieren
+        renderEntries();
+      });
+
+      contentDiv.appendChild(form);
+
+      // Letzte Einträge
+      const historyDiv = document.createElement("div");
+      historyDiv.className = "attendance-history";
+      historyDiv.innerHTML = "<h3>Letzte Einträge</h3>";
+
+      const renderEntries = () => {
+        const list = historyDiv.querySelector("ul") || document.createElement("ul");
+        list.className = "entries-list";
+        list.innerHTML = "";
+
+        const entries = Storage.list("attendance_");
+        if (entries.length === 0) {
+          list.innerHTML = "<li>Keine Einträge vorhanden.</li>";
+        } else {
+          entries
+            .sort((a, b) => b.value.id - a.value.id)
+            .slice(0, 5)
+            .forEach((entry) => {
+              const li = document.createElement("li");
+              li.innerHTML = `
+                <strong>${entry.value.name}</strong> - ${entry.value.date}
+                <p>${entry.value.status}${entry.value.note ? " | " + entry.value.note : ""}</p>
+              `;
+              list.appendChild(li);
+            });
+        }
+
+        if (!historyDiv.querySelector("ul")) {
+          historyDiv.appendChild(list);
+        }
+      };
+
+      renderEntries();
+      historyDiv.appendChild(document.createElement("ul"));
+      renderEntries();
+
+      contentDiv.appendChild(historyDiv);
+
+      // Hilfe
+      contentDiv.appendChild(
+        UI.createHelpBox(
+          isEasyLang
+            ? "Trag ein ob du da bist oder nicht."
+            : "Tragen Sie täglich ein, ob Sie anwesend sind oder nicht."
+        )
+      );
+
+      container.appendChild(contentDiv);
+      container.appendChild(renderFooter("main.page-content"));
+    }
+
+    initPage();
+  </script>
+</body>
+</html>

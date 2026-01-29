@@ -1,0 +1,31 @@
+{
+  "angebote": [
+    {
+      "id": 1,
+      "titel": "Yoga für Anfänger",
+      "ort": "Gymnastikraum",
+      "uhrzeit": "Montag & Mittwoch 10:00 - 11:00",
+      "beschreibung": "Entspanntes Yoga für alle.",
+      "zielgruppe": "Alle",
+      "text_easy": "Yoga zum Entspannen. Mo & Mi 10 Uhr."
+    },
+    {
+      "id": 2,
+      "titel": "Kreativwerkstatt",
+      "ort": "Atelier",
+      "uhrzeit": "Dienstag 14:00 - 16:00",
+      "beschreibung": "Malen, Basteln, Kreativität ausleben.",
+      "zielgruppe": "Interessierte",
+      "text_easy": "Malen und Basteln. Di 14 Uhr."
+    },
+    {
+      "id": 3,
+      "titel": "Gemeinsamer Spaziergang",
+      "ort": "Park",
+      "uhrzeit": "Donnerstag 15:00",
+      "beschreibung": "Gemütlicher Spaziergang in der Natur.",
+      "zielgruppe": "Alle",
+      "text_easy": "Spaziergang im Park. Do 15 Uhr."
+    }
+  ]
+}
